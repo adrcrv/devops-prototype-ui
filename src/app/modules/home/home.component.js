@@ -18,6 +18,7 @@ function FaceComponent({ uptime, lastUpdate }) {
       <div>
         <div style={{ textAlign: 'center' }}>
           <h2>Welcome to DevOps TCC</h2>
+          <hr width="150px" />
         </div>
         <div className={styles.faceCardWrapper}>
           <div className={styles.faceCard}>
