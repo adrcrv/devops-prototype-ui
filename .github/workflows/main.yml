@@ -95,7 +95,7 @@ jobs:
 
     steps:
       - name: Docker Hub Push
-        uses: echo Docker Hub Push Command
+        run: echo Docker Hub Push Command
 
   deploy:
     runs-on: ubuntu-latest
@@ -103,4 +103,4 @@ jobs:
 
     steps:
       - name: Deploy to EC2
-        uses: echo Deploy to EC2 Command
+        run: echo Deploy to EC2 Command
