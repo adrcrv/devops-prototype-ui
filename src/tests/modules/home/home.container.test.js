@@ -21,6 +21,7 @@ describe('Home Container', () => {
 
   it('Expect Home to render unchanged', () => {
     process.env.NEXT_PUBLIC_LAST_UPDATE = 'Sat Apr 23 02:13:45 -03 2022';
+    jest.useFakeTimers().setSystemTime(new Date(process.env.NEXT_PUBLIC_LAST_UPDATE));
     const { container } = render(<HomeContainer />);
     expect(container).toMatchSnapshot();
   });
