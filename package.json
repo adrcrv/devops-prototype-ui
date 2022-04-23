@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest"
   },
   "dependencies": {
     "next": "12.1.5",
@@ -15,14 +16,20 @@
     "react-dom": "18.0.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
     "@next/eslint-plugin-next": "^12.1.5",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.1.1",
     "@types/react": "^18.0.6",
+    "babel-jest": "^27.5.1",
     "eslint": "8.13.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "12.1.5",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.4.0"
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "jest": "^27.5.1"
   }
 }

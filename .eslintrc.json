@@ -1,5 +1,6 @@
 {
   "extends": ["airbnb", "airbnb/hooks", "plugin:@next/next/recommended"],
+  "env": { "jest": true },
   "rules": {
     "react/jsx-filename-extension": "off",
     "react/forbid-prop-types": "off",

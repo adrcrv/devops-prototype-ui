@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Renders homepage unchanged 1`] = `
+<div>
+  <div
+    class="footer"
+  >
+    <div
+      class="copyright"
+    >
+      © DevOps TCC. 2022. Todos os direitos reservados.
+    </div>
+  </div>
+</div>
+`;
