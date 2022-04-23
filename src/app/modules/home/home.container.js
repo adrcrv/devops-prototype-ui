@@ -3,7 +3,7 @@ import { getUptime } from '../../services/health';
 import HomeComponent from './home.component';
 
 function HomeContainer() {
-  const initialLastUpdate = new Date(process.env.NEXT_PUBLIC_LAST_UPDATE).toLocaleString('pt-BR');
+  const initialLastUpdate = new Date(process.env.NEXT_PUBLIC_LAST_UPDATE).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
   const [lastUpdate] = useState(initialLastUpdate);
   const [uptime, setUptime] = useState('Loading...');
 
