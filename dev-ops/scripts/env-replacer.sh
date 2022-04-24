@@ -5,7 +5,7 @@ file=$2
 
 cat $template > $file
 
-environments=$(cat $file | grep -o '\$[^ ]*' | sort -u)
+environments=$(cat $file | grep -o '\$[^" ]*' | sort -u)
 
 for environment in $environments; do
   key="${environment:1}"
