@@ -10,7 +10,8 @@
     pull: yes
     recreate: yes
     ports:
-      - "{{ docker.port }}:{{ docker.port }}"
+      - "80:80"
+      - "443:443"
     # env_file: "{{ secrets.remote_path }}/{{ secrets.file }}"
     comparisons:
       image: ignore   # don't restart containers with older versions of the image

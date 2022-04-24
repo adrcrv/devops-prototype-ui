@@ -3,7 +3,6 @@ const next = require('next');
 const greenLock = require('greenlock-express');
 
 const hostname = 'localhost';
-const port = process.env.PORT || 443;
 const dev = false;
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -27,5 +26,5 @@ const prepareHandler = () => {
   gl.serve(serverHandler);
 };
 
-console.log(`${ccGeen}ready ${ccDefault}- started server on 0.0.0.0:${port}, url: http://${hostname}:${port}`);
+console.log(`${ccGeen}ready ${ccDefault}- started server on 0.0.0.0, url: http://${hostname}`);
 app.prepare().then(prepareHandler);

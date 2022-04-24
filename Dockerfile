@@ -15,6 +15,6 @@ RUN yarn install --frozen-lockfile --production
 COPY . .
 RUN yarn build
 
-EXPOSE $PORT
+EXPOSE 80 443
 
 CMD ["node", "server.js"]
