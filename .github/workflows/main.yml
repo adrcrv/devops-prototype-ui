@@ -96,18 +96,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install Dependencies
-        run: sudo apt install -y ansible
-      - run: ansible-galaxy collection install -r ./dev-ops/ansible/misc/requirements.yml
-
-      - name: Set Ansible Environments
-        run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/hosts.template ./dev-ops/ansible/misc/hosts
-      - run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/.env.template.yaml ./dev-ops/ansible/misc/.env.yaml
-
-      - name: Docker Login && Image Build && Image Push
-        run: |
-          ansible-playbook ./dev-ops/ansible/playbooks/push.yaml --inventory ./dev-ops/ansible/misc/hosts \
-          --private-key $SSH_PRIVATE_KEY --extra-vars "@./dev-ops/ansible/misc/.env.yaml"
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_ID }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      
+      - name: Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG }}
 
   # deploy:
   #   runs-on: ubuntu-latest
