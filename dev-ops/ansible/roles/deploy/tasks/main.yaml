@@ -11,7 +11,7 @@
     recreate: yes
     ports:
       - "{{ docker.port }}:{{ docker.port }}"
-    env_file: "{{ secrets.remote_path }}/{{ secrets.file }}"
+    # env_file: "{{ secrets.remote_path }}/{{ secrets.file }}"
     comparisons:
       image: ignore   # don't restart containers with older versions of the image
       env: strict   # we want precisely this environment

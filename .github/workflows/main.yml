@@ -136,9 +136,10 @@ jobs:
       - run: ansible-galaxy collection install -r ./dev-ops/ansible/misc/requirements.yml
 
       - name: Set Ansible Environments
-        run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/hosts.template ./dev-ops/ansible/misc/hosts
-      - run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/.env.template.yaml ./dev-ops/ansible/misc/.env.yaml
-      - run: echo "$SSH_PRIVATE_KEY" > $SSH_PRIVATE_KEY_FILE && chmod 400 $SSH_PRIVATE_KEY_FILE
+        run: |
+          ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/hosts.template ./dev-ops/ansible/misc/hosts
+          ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/.env.template.yaml ./dev-ops/ansible/misc/.env.yaml
+          echo "$SSH_PRIVATE_KEY" > $SSH_PRIVATE_KEY_FILE && chmod 400 $SSH_PRIVATE_KEY_FILE
 
       - name: Deploy to Hosts
         run: |
