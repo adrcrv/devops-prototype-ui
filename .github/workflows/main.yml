@@ -96,11 +96,12 @@ jobs:
     steps:
       - name: Install Dependencies
         run: sudo apt install -y ansible
+      - run: cat ./dev-ops/ansible/misc/requirements.yml
       - run: ansible-galaxy collection install -r ./dev-ops/ansible/misc/requirements.yml
 
       - name: Set Ansible Environments
         run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/hosts.template ./dev-ops/ansible/misc/hosts
-      - run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/.env.template.yaml .env.yaml
+      - run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/.env.template.yaml ./dev-ops/ansible/misc/.env.yaml
 
       - name: Docker Login && Image Build && Image Push
         run: |
