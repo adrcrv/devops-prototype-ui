@@ -99,60 +99,55 @@ jobs:
       - name: Set Release Date Environment
         run: echo "RELEASE_DATE=$(date)" >> ${GITHUB_ENV}
 
-      - name: Set Release Date Environment
-        env:
-          RELEASE_DATE: ${{ env.RELEASE_DATE }}
-        run: echo $RELEASE_DATE
-
-  #     - name: Login to Docker Hub
-  #       uses: docker/login-action@v1
-  #       with:
-  #         username: ${{ secrets.DOCKER_ID }}
-  #         password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_ID }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
       
-  #     - name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-  #     - name: Build and Push
-  #       env:
-  #         RELEASE_DATE: ${{ env.RELEASE_DATE }}
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         context: .
-  #         file: ./Dockerfile
-  #         push: true
-  #         tags: ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG }}
+      - name: Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG }}
+          env:
+            RELEASE_DATE: ${{ env.RELEASE_DATE }}
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: [push]
-  #   # needs: [eslint, test, build, push]
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [push]
+    # needs: [eslint, test, build, push]
 
-  #   env:
-  #     DOCKER_ID: ${{ secrets.DOCKER_ID }}
-  #     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  #     DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
-  #     DOCKER_TAG: ${{ secrets.DOCKER_TAG }}
-  #     DOCKER_PORT: ${{ secrets.DOCKER_PORT }}
-  #     INSTANCE_HOSTS: ${{ secrets.INSTANCE_HOSTS }}
-  #     INSTANCE_USER: ${{ secrets.INSTANCE_USER }}
-  #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  #     SSH_PRIVATE_KEY_FILE: ./ssh-private-key
+    env:
+      DOCKER_ID: ${{ secrets.DOCKER_ID }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_REPOSITORY: ${{ secrets.DOCKER_REPOSITORY }}
+      DOCKER_TAG: ${{ secrets.DOCKER_TAG }}
+      DOCKER_PORT: ${{ secrets.DOCKER_PORT }}
+      INSTANCE_HOSTS: ${{ secrets.INSTANCE_HOSTS }}
+      INSTANCE_USER: ${{ secrets.INSTANCE_USER }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SSH_PRIVATE_KEY_FILE: ./ssh-private-key
 
-  #   steps:
-  #     - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - name: Install Dependencies
-  #       run: sudo apt install -y ansible
-  #     - run: ansible-galaxy collection install -r ./dev-ops/ansible/misc/requirements.yml
+      - name: Install Dependencies
+        run: sudo apt install -y ansible
+      - run: ansible-galaxy collection install -r ./dev-ops/ansible/misc/requirements.yml
 
-  #     - name: Set Ansible Environments
-  #       run: |
-  #         ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/hosts.template ./dev-ops/ansible/misc/hosts
-  #         ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/.env.template.yaml ./dev-ops/ansible/misc/.env.yaml
-  #         echo "$SSH_PRIVATE_KEY" > $SSH_PRIVATE_KEY_FILE && chmod 400 $SSH_PRIVATE_KEY_FILE
+      - name: Set Ansible Environments
+        run: |
+          ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/hosts.template ./dev-ops/ansible/misc/hosts
+          ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/.env.template.yaml ./dev-ops/ansible/misc/.env.yaml
+          echo "$SSH_PRIVATE_KEY" > $SSH_PRIVATE_KEY_FILE && chmod 400 $SSH_PRIVATE_KEY_FILE
 
-  #     - name: Deploy to Hosts
-  #       run: |
-  #         ansible-playbook ./dev-ops/ansible/playbooks/deploy.yaml --inventory ./dev-ops/ansible/misc/hosts \
-  #         --private-key $SSH_PRIVATE_KEY_FILE --extra-vars "@./dev-ops/ansible/misc/.env.yaml"
+      - name: Deploy to Hosts
+        run: |
+          ansible-playbook ./dev-ops/ansible/playbooks/deploy.yaml --inventory ./dev-ops/ansible/misc/hosts \
+          --private-key $SSH_PRIVATE_KEY_FILE --extra-vars "@./dev-ops/ansible/misc/.env.yaml"
