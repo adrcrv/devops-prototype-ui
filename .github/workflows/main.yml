@@ -110,7 +110,7 @@ jobs:
 
       - name: Build and Push
         env:
-          RELEASE_DATE: ${RELEASE_DATE}
+          RELEASE_DATE: ${{ env.RELEASE_DATE }}
         uses: docker/build-push-action@v2
         with:
           context: .
