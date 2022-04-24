@@ -62,7 +62,7 @@ exports[`Home Container Expect Home to render unchanged 1`] = `
         <h2>
           “DevOps does deal with automation,
           <br />
-            but that’s not its only function.“
+            but that's not its only function.“
         </h2>
       </div>
       <div>
