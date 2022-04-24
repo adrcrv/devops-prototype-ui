@@ -3,16 +3,16 @@ import Image from 'next/image';
 import { string } from 'prop-types';
 import styles from './home.module.css';
 
-function HomeComponent({ uptime, lastUpdate }) {
+function HomeComponent({ uptime, lastDeploy }) {
   return (
     <div>
-      <FaceComponent uptime={uptime} lastUpdate={lastUpdate} />
+      <FaceComponent uptime={uptime} lastDeploy={lastDeploy} />
       <ShockingPhraseComponent />
     </div>
   );
 }
 
-function FaceComponent({ uptime, lastUpdate }) {
+function FaceComponent({ uptime, lastDeploy }) {
   return (
     <div className={styles.faceWrapper}>
       <div>
@@ -22,8 +22,8 @@ function FaceComponent({ uptime, lastUpdate }) {
         </div>
         <div className={styles.faceCardWrapper}>
           <div className={styles.faceCard}>
-            <h4>Last Update</h4>
-            <p>{lastUpdate}</p>
+            <h4>Last Deploy</h4>
+            <p>{lastDeploy}</p>
           </div>
           <div className={styles.faceCard}>
             <h4>Uptime</h4>
@@ -46,7 +46,7 @@ function ShockingPhraseComponent() {
         <h2>
           &ldquo;DevOps does deal with automation,
           <br />
-          &nbsp;&nbsp;but that’s not its only function.&ldquo;
+          &nbsp;&nbsp;but that&apos;s not its only function.&ldquo;
         </h2>
       </div>
       <div>
@@ -57,12 +57,12 @@ function ShockingPhraseComponent() {
 }
 
 HomeComponent.propTypes = {
-  lastUpdate: string.isRequired,
+  lastDeploy: string.isRequired,
   uptime: string.isRequired,
 };
 
 FaceComponent.propTypes = {
-  lastUpdate: string.isRequired,
+  lastDeploy: string.isRequired,
   uptime: string.isRequired,
 };
 

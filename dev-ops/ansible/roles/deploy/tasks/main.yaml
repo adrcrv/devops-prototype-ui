@@ -1,0 +1,25 @@
+- name: Log into DockerHub
+  community.docker.docker_login:
+    username: "{{ docker.id }}"
+    password: "{{ docker.password }}"
+
+- name: Run Docker Container
+  community.docker.docker_container:
+    name: "{{ docker.id }}_{{ docker.repository }}_{{ docker.tag  }}"
+    image: "{{ docker.id }}/{{ docker.repository }}:{{ docker.tag  }}"
+    pull: yes
+    recreate: yes
+    ports:
+      - "{{ docker.port }}:{{ docker.port }}"
+    env_file: "{{ secrets.remote_path }}/{{ secrets.file }}"
+    comparisons:
+      image: ignore   # don't restart containers with older versions of the image
+      env: strict   # we want precisely this environment
+
+- name: Docker Prune
+  community.docker.docker_prune:
+    containers: yes
+    images: yes
+    networks: yes
+    volumes: yes
+    builder_cache: yes

@@ -24,7 +24,7 @@ exports[`Home Container Expect Home to render unchanged 1`] = `
             class="faceCard"
           >
             <h4>
-              Last Update
+              Last Deploy
             </h4>
             <p>
               23/04/2022 02:13:45

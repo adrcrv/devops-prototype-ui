@@ -1,0 +1,10 @@
+- hosts: all
+  roles:
+    - role: '../roles/push'
+  vars:
+    docker:
+      id: "{{ DOCKER_ID }}"
+      password: "{{ DOCKER_PASSWORD }}"
+      repository: "{{ DOCKER_REPOSITORY }}"
+      tag: "{{ DOCKER_TAG }}"
+      port: "{{ DOCKER_PORT }}"

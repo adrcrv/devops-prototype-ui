@@ -9,98 +9,108 @@ on:
   
 jobs:
 
-  install:
-    runs-on: ubuntu-latest
+  # install:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
       
-      - name: Cache Node Modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+  #     - name: Cache Node Modules
+  #       uses: actions/cache@v2
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       
-      - name: Install
-        run: yarn install
+  #     - name: Install
+  #       run: yarn install
 
-  eslint:
-    runs-on: ubuntu-latest
-    needs: [install]
+  # eslint:
+  #   runs-on: ubuntu-latest
+  #   needs: [install]
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
       
-      - name: Cache Node Modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+  #     - name: Cache Node Modules
+  #       uses: actions/cache@v2
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       
-      - name: Install
-        run: yarn install
+  #     - name: Install
+  #       run: yarn install
       
-      - name: Test
-        run: yarn eslint
+  #     - name: Test
+  #       run: yarn eslint
         
-  test:
-    runs-on: ubuntu-latest
-    needs: [install]
+  # test:
+  #   runs-on: ubuntu-latest
+  #   needs: [install]
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
       
-      - name: Cache Node Modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+  #     - name: Cache Node Modules
+  #       uses: actions/cache@v2
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       
-      - name: Install
-        run: yarn install
+  #     - name: Install
+  #       run: yarn install
       
-      - name: Test
-        run: yarn test
+  #     - name: Test
+  #       run: yarn test
         
-  build:
-    runs-on: ubuntu-latest
-    needs: [install]
+  # build:
+  #   runs-on: ubuntu-latest
+  #   needs: [install]
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
       
-      - name: Cache Node Modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+  #     - name: Cache Node Modules
+  #       uses: actions/cache@v2
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         path: node_modules
+  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       
-      - name: Install
-        run: yarn install
+  #     - name: Install
+  #       run: yarn install
       
-      - name: Build
-        run: yarn build
+  #     - name: Build
+  #       run: yarn build
 
   push:
     runs-on: ubuntu-latest
-    needs: [eslint, test, build]
+    # needs: [eslint, test, build]
 
     steps:
-      - name: Docker Hub Push
-        run: echo Docker Hub Push Command
+      - name: Install Dependencies
+        run: sudo apt install -y ansible
+      - run: ansible-galaxy collection install -r ./dev-ops/ansible/misc/requirements.yml
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [eslint, test, build, push]
+      - name: Set Ansible Environments
+        run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/hosts.template ./dev-ops/ansible/misc/hosts
+      - run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/.env.template.yaml .env.yaml
 
-    steps:
-      - name: Deploy to EC2
-        run: echo Deploy to EC2 Command
+      - name: Docker Login && Image Build && Image Push
+        run: |
+          ansible-playbook ./dev-ops/ansible/playbooks/push.yaml --inventory ./dev-ops/ansible/misc/hosts \
+          --private-key $SSH_PRIVATE_KEY --extra-vars "@./dev-ops/ansible/misc/.env.yaml"
+
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: [eslint, test, build, push]
+
+  #   steps:
+  #     - name: Deploy to EC2
+  #       run: echo Deploy to EC2 Command
