@@ -96,7 +96,7 @@ jobs:
     steps:
       - name: Install Dependencies
         run: sudo apt install -y ansible
-      - run: cat ./dev-ops/ansible/misc/requirements.yml
+      - run: ls -R ./dev-ops
       - run: ansible-galaxy collection install -r ./dev-ops/ansible/misc/requirements.yml
 
       - name: Set Ansible Environments
