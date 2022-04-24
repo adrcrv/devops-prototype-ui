@@ -94,9 +94,10 @@ jobs:
     # needs: [eslint, test, build]
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Install Dependencies
         run: sudo apt install -y ansible
-      - run: ls .
       - run: ansible-galaxy collection install -r ./dev-ops/ansible/misc/requirements.yml
 
       - name: Set Ansible Environments
