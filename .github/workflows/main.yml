@@ -117,6 +117,7 @@ jobs:
           tags: ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG }}
           build-args: |
             RELEASE_DATE=${{ env.RELEASE_DATE }}
+            DOCKER_PORT: ${{ secrets.DOCKER_PORT }}
 
   deploy:
     runs-on: ubuntu-latest

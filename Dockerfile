@@ -1,10 +1,11 @@
 FROM node:16-alpine
 
 ARG RELEASE_DATE
+ARG PORT
 
 ENV NODE_ENV=production
 ENV NEXT_PUBLIC_LAST_UPDATE=$RELEASE_DATE
-ENV PORT=80
+ENV PORT=$PORT
 
 WORKDIR /usr/src/app
 
@@ -14,6 +15,6 @@ RUN yarn install --frozen-lockfile --production
 COPY . .
 RUN yarn build
 
-EXPOSE 80
+EXPOSE $PORT
 
-CMD ["yarn", "start"]
+CMD ["node", "server.js"]
