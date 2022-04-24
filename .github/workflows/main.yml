@@ -142,5 +142,5 @@ jobs:
 
       - name: Deploy to Hosts
         run: |
-          ansible-playbook ./dev-ops/ansible/playbooks/push.yaml --inventory ./dev-ops/ansible/misc/hosts \
+          ansible-playbook ./dev-ops/ansible/playbooks/deploy.yaml --inventory ./dev-ops/ansible/misc/hosts \
           --private-key $SSH_PRIVATE_KEY_FILE --extra-vars "@./dev-ops/ansible/misc/.env.yaml"
