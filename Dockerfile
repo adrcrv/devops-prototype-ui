@@ -2,6 +2,7 @@ FROM node:16-alpine
 
 ENV NODE_ENV=production
 ENV NEXT_PUBLIC_LAST_UPDATE=$(date)
+ENV PORT=80
 
 WORKDIR /usr/src/app
 
