@@ -137,6 +137,7 @@ jobs:
       - name: Set Ansible Environments
         run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/hosts.template ./dev-ops/ansible/misc/hosts
       - run: ./dev-ops/scripts/env-replacer.sh ./dev-ops/ansible/misc/.env.template.yaml ./dev-ops/ansible/misc/.env.yaml
+      - run: echo $SSH_PRIVATE_KEY
 
       - name: Deploy to Hosts
         run: |
