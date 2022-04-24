@@ -115,8 +115,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_ID }}/${{ secrets.DOCKER_REPOSITORY }}:${{ secrets.DOCKER_TAG }}
-          env:
-            RELEASE_DATE: ${{ env.RELEASE_DATE }}
+          build-args: |
+            RELEASE_DATE=${{ env.RELEASE_DATE }}
 
   deploy:
     runs-on: ubuntu-latest
