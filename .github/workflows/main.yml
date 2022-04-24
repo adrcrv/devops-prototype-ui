@@ -96,6 +96,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set Release Date Environment
+        run: echo "RELEASE_DATE=$(date)" >> ${GITHUB_ENV}
+
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -104,9 +107,11 @@ jobs:
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Build and Push
         uses: docker/build-push-action@v2
+        env:
+          RELEASE_DATE: ${{ RELEASE_DATE }}
         with:
           context: .
           file: ./Dockerfile
