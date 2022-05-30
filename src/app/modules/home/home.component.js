@@ -31,7 +31,7 @@ function FaceComponent({ uptime, lastDeploy }) {
           </div>
           <div className={styles.faceCard}>
             <h4>Random Content</h4>
-            <p style={{ fontSize: 24 }}>🤖</p>
+            <p style={{ fontSize: 24 }}>🤖 👨‍💻</p>
           </div>
         </div>
       </div>
