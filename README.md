@@ -1,7 +1,7 @@
+[![Continuous Integration](https://github.com/adrcrv/devops-prototype-ui/actions/workflows/main.yml/badge.svg)](https://github.com/adrcrv/devops-prototype-ui/actions/workflows/main.yml)
+
 ## 🛍️ DevOps Prototype UI
 This is a DevOps Prototype UI Project developed with Next.JS.
-
-[![Continuous Integration](https://github.com/adrcrv/devops-prototype-ui/actions/workflows/main.yml/badge.svg)](https://github.com/adrcrv/devops-prototype-ui/actions/workflows/main.yml)
 
 ## 🛠 Requirements
 [Node.JS](https://nodejs.org/en/download/)  
